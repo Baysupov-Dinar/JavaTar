@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JavaTar:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JavaTar_jar</output-path>
+    <root id="archive" name="JavaTar.jar">
+      <element id="module-output" name="JavaTar" />
+      <element id="module-test-output" name="JavaTar" />
+    </root>
+  </artifact>
+</component>

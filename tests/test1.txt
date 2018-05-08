@@ -1,10 +1,12 @@
+#!++№№№
 list for supermarket.txt
 1 potato
 3 milk
+#!++№№%
 12 beer
-#!++
+#!++№№№
 books.txt
 Ницше
 Гебельс
 123123123
-#!++
+№!++

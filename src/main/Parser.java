@@ -11,24 +11,23 @@ public class Parser {
             if (args[i].equals("-u")) {
                 fileList.add(new File(args[i + 1]));
                 new Tar(fileList).unWeld();
+                break;
             }
             if (args[i].equals("-out")) {
-                if (!fileList.isEmpty()) throw new IllegalArgumentException();
-                String outName = "";
-                for (int j = 0; j < args.length; j++) {
-                    if (args[j].equals("-out")) {
-                        j++;
-                        outName = args[j];
-                    } else {
-                        File tmpFile = new File(args[j]);
-                        if (tmpFile.exists()) fileList.add(tmpFile);
-                    }
-                }
+                if (fileList.isEmpty()) throw new IllegalArgumentException();
+                String outName=args[i+1];
                 new Tar(fileList, outName).weld();
+                break;
             }
+            else{
+                File tmpFile=new File(args[i]);
+                if(tmpFile.exists())fileList.add(tmpFile);
+                else throw new IllegalArgumentException("Some files does not exist");
+            }
+
         }
         if (fileList.isEmpty()) {
-            throw new IllegalArgumentException();
+            System.out.println("Error, illegal arguments");
         }
     }
 }

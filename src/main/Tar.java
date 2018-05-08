@@ -6,6 +6,7 @@ import java.util.List;
 public class Tar {
     private List<File> fileList;
     private String outFile = "";
+    private String key = "#!++";
 
     public Tar(List<File> fileList) {
         this.fileList = fileList;
@@ -17,9 +18,14 @@ public class Tar {
     }
 
     public void weld() {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(outFile));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outFile))) {
+            Boolean check=false;
+            while(!check){
+                if(checkKey()) check=true;
+            }
             for (File elem : fileList) {
+                bw.write(key);
+                bw.newLine();
                 bw.write(elem.getName());
                 bw.newLine();
                 BufferedReader br = new BufferedReader(new FileReader(elem));
@@ -28,22 +34,21 @@ public class Tar {
                     bw.write(curr);
                     bw.newLine();
                 }
-                bw.write("#!++");
-                bw.newLine();
+                br.close();
             }
-            bw.close();
+            bw.write(key);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            throw new IllegalArgumentException("Can't reach files");
         }
     }
 
     public void unWeld() {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileList.get(0)));
+        try (BufferedReader br = new BufferedReader(new FileReader(fileList.get(0)))){
             String curr;
+            String finalKey=br.readLine();
             while ((curr = br.readLine()) != null) {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(curr));
-                while (!(curr = br.readLine()).equals("#!++")) {
+                while (!(curr = br.readLine()).equals(finalKey)) {
                     bw.write(curr);
                     bw.newLine();
                 }
@@ -52,5 +57,19 @@ public class Tar {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+    public boolean checkKey()throws IOException{
+        for (File elem : fileList){
+            BufferedReader br = new BufferedReader(new FileReader(elem));
+            String curr;
+            while((curr=br.readLine())!=null){
+                if(curr.contains(key)){
+                    key=key.concat("№");
+                    return false;
+                }
+            }
+
+        }
+        return true;
     }
 }

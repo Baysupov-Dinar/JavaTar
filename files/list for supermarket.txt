@@ -1,3 +1,4 @@
 1 potato
 3 milk
+#!++№№%
 12 beer

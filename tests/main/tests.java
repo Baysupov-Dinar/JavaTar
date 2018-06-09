@@ -34,12 +34,12 @@ public class tests {
     }
 
     @Test
-    public void weld(){
+    public void weld() throws IOException {
         Parser.main(new String[]{"files/books.txt", "files/list for supermarket.txt", "-out", "example.txt"});
         assertFileContent("example.txt","test1.txt");
     }
     @Test
-    public void unWeld(){
+    public void unWeld() throws IOException {
         Parser.main(new String[]{"-u", "files/example.txt"});
         assertFileContent("tests/test2.txt","books.txt");
         assertFileContent("tests/test3.txt","list for supermarket.txt");

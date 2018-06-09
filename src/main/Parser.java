@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
-    public void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         List<File> fileList = new ArrayList<>();
         try {
             for (int i = 0; i < args.length; i++) {
@@ -32,8 +32,8 @@ public class Parser {
             if (fileList.isEmpty()) {
                 System.out.println("Error, illegal arguments");
             }
-        } catch (IOException ioEx) {
-            throw Tar.getEx();
+        } catch (IOException ex) {
+            throw ex;
         }
     }
 }

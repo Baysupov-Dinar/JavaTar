@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         List<File> fileList = new ArrayList<>();
         try {
             for (int i = 0; i < args.length; i++) {
@@ -16,7 +16,10 @@ public class Parser {
                     break;
                 }
                 if (args[i].equals("-out")) {
-                    if (fileList.isEmpty()) throw new IllegalArgumentException();
+                    if (fileList.isEmpty()){
+                        System.out.println("can't find input files");
+                        System.exit(1);
+                    }
                     String outName = args[i + 1];
                     new Tar(fileList, outName).weld();
                     break;
@@ -24,8 +27,8 @@ public class Parser {
                     File tmpFile = new File(args[i]);
                     if (tmpFile.exists()) fileList.add(tmpFile);
                     else {
-                        System.out.println("Some files does not exist");
-                        throw new IllegalArgumentException();
+                        System.out.println("File " + args[i] + " does not exist");
+                        System.exit(1);
                     }
                 }
             }
@@ -33,7 +36,8 @@ public class Parser {
                 System.out.println("Error, illegal arguments");
             }
         } catch (IOException ex) {
-            throw ex;
+            System.out.println("Ошибка работы с файлом");
+            System.exit(2);
         }
     }
 }
